@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "HHUI/HHTestObject.h"
+#import "HHAFNetwork/HHLabel.h"
 
 @interface FirstViewController ()
 
@@ -21,6 +22,9 @@
     
     HHTestObject *testObjc = [[HHTestObject alloc] init];
     [testObjc libraryPrintDictionary:@{@"🐑":@"年",@"大":@"吉"}];
+    
+    HHLabel *testLabel = [[HHLabel alloc] init];
+    [testLabel testFramework];
 }
 
 - (void)didReceiveMemoryWarning {
