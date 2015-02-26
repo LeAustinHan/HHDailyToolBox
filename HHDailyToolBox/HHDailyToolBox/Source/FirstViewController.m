@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "HHUI/HHTestObject.h"
 
 @interface FirstViewController ()
 
@@ -16,7 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib
+    
+    HHTestObject *testObjc = [[HHTestObject alloc] init];
+    [testObjc libraryPrintDictionary:@{@"🐑":@"年",@"大":@"吉"}];
 }
 
 - (void)didReceiveMemoryWarning {
