@@ -10,6 +10,13 @@
 
 @interface HHWeatherVCL : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *weatherIconImgView;
+
+@property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UILabel *windLabel;
+@property (weak, nonatomic) IBOutlet UILabel *curInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *curTemLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
 @end
 

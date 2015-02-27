@@ -8,7 +8,6 @@
 
 #import "FirstViewController.h"
 #import "HHUI/HHTestObject.h"
-#import "HHAFNetwork/HHLabel.h"
 #import "HHAFNetwork/AFJSONRequestOperation.h"
 
 #import "AFAppDotNetAPIClient.h"
@@ -23,6 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib
     
+    return;
     HHTestObject *testObjc = [[HHTestObject alloc] init];
     [testObjc libraryPrintDictionary:@{@"🐑":@"年",@"大":@"吉"}];
     
