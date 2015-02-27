@@ -30,7 +30,9 @@ static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free
     // Do any additional setup after loading the view, typically from a nib.
     
     [self jsonTapAction:nil];
-    self.indicator;
+    self.weatherIconImgView.layer.cornerRadius = 4.0;
+    self.weatherIconImgView.layer.borderWidth = 2.0;
+    self.weatherIconImgView.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,6 +79,7 @@ static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free
     self.tempLabel.text = [NSString stringWithFormat:@"最低  %@°C,最高 %@°C",weatherVo.tempMinC,weatherVo.tempMaxC];
     self.windLabel.text = [NSString stringWithFormat:@"风力%@级,风速%@m/s",weatherVo.winddirDegree,weatherVo.windspeedMiles];
     
+    self.weatherIconImgView.hidden = NO;
     self.curTemLabel.hidden = NO;
     self.curInfoLabel.hidden = NO;
     self.tempLabel.hidden = NO;
