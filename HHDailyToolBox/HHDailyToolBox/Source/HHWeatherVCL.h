@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HHUI/FlatUIKit.h"
 
-@interface HHWeatherVCL : UIViewController<UITextFieldDelegate>
+@interface HHWeatherVCL : UIViewController<UITextFieldDelegate,FUIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *bgImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherIconImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherContextImgView;
 
+@property (weak, nonatomic) IBOutlet FUIButton *doneBtn;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windLabel;
 @property (weak, nonatomic) IBOutlet UILabel *curInfoLabel;

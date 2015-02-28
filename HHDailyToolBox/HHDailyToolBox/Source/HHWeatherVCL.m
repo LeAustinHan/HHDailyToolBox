@@ -13,6 +13,7 @@
 #import "HHWeatherSevice.h"
 #import "HHWeatherVo.h"
 
+
 @interface HHWeatherVCL ()
 
 @property (nonatomic,strong) NSDictionary *weather;
@@ -30,6 +31,13 @@
     self.weatherIconImgView.layer.cornerRadius = 15.0;
     self.weatherIconImgView.layer.borderWidth = 10.0;
     self.weatherIconImgView.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    self.doneBtn.titleLabel.font = [UIFont iconFontWithSize:16];
+    self.doneBtn.buttonColor = [UIColor turquoiseColor];
+    self.doneBtn.shadowColor = [UIColor greenSeaColor];
+    self.doneBtn.shadowHeight = 3.0f;
+    self.doneBtn.cornerRadius = 6.0f;
+    
     self.cityTextField.delegate = self;
     
     [self weatherViewHidden:YES];
@@ -67,11 +75,28 @@
 
 - (IBAction)jsonTapAction:(id)sender{
     if (self.cityTextField.text.length==0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error city name"
-                                                            message:@"Please check and try again"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
+        FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Error city name"
+                                                              message:@"Please check and try again"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil, nil];
+        
+        alertView.alertViewStyle = FUIAlertViewStylePlainTextInput;
+        alertView.alertContainer.layer.cornerRadius = 5.0;
+        alertView.alertContainer.layer.borderWidth = 10.0;
+        alertView.alertContainer.layer.borderColor = [UIColor cloudsColor].CGColor;
+        alertView.titleLabel.textColor = [UIColor cloudsColor];
+        alertView.titleLabel.font = [UIFont boldFlatFontOfSize:16];
+        alertView.messageLabel.textColor = [UIColor cloudsColor];
+        alertView.messageLabel.font = [UIFont flatFontOfSize:14];
+        alertView.backgroundOverlay.backgroundColor = [[UIColor cloudsColor] colorWithAlphaComponent:0.8];
+        alertView.alertContainer.backgroundColor = [UIColor midnightBlueColor];
+        alertView.defaultButtonColor = [UIColor cloudsColor];
+        alertView.defaultButtonShadowColor = [UIColor asbestosColor];
+        alertView.defaultButtonFont = [UIFont boldFlatFontOfSize:16];
+        alertView.defaultButtonTitleColor = [UIColor asbestosColor];
+
+        alertView.delegate = self;
         [alertView show];
         return;
     }
@@ -84,12 +109,20 @@
         NSLog(@"get weather == %@",self.weather);
         [instance reloadWeatherView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Weather"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
+        FUIAlertView *alertView = [[FUIAlertView alloc] initWithTitle:@"Hello" message:@"This is an alert view" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Do Something", nil];
+        alertView.alertViewStyle = FUIAlertViewStylePlainTextInput;
+        [@[[alertView textFieldAtIndex:0], [alertView textFieldAtIndex:1]] enumerateObjectsUsingBlock:^(FUITextField *textField, NSUInteger idx, BOOL *stop) {
+            [textField setTextFieldColor:[UIColor cloudsColor]];
+            [textField setBorderColor:[UIColor asbestosColor]];
+            [textField setCornerRadius:4];
+            [textField setFont:[UIFont flatFontOfSize:14]];
+            [textField setTextColor:[UIColor midnightBlueColor]];
+        }];
+//[[FUIAlertView alloc]initWithTitle:@"Error Retrieving Weather"
+//                                                            message:[error localizedDescription]
+//                                                           delegate:nil
+//                                                  cancelButtonTitle:@"Ok"
+//                                                  otherButtonTitles:nil];
         [alertView show];
     }];
 }

@@ -98,7 +98,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FHD-kg-OMl">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FHD-kg-OMl" userLabel="searchBtn" customClass="FUIButton">
                                 <rect key="frame" x="121" y="447" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -119,6 +119,7 @@
                         <outlet property="cityTextField" destination="JGm-Yx-xCv" id="MMg-cw-SaO"/>
                         <outlet property="curInfoLabel" destination="cuy-lw-gMX" id="L5v-mx-KtJ"/>
                         <outlet property="curTemLabel" destination="EwQ-ZO-t51" id="WFq-j4-WBC"/>
+                        <outlet property="doneBtn" destination="FHD-kg-OMl" id="XYQ-UZ-ee6"/>
                         <outlet property="indicator" destination="6I5-W4-Tq5" id="Ozp-9L-CN6"/>
                         <outlet property="tempLabel" destination="zEq-FU-wV5" id="YZf-tM-RQ4"/>
                         <outlet property="weatherContextImgView" destination="AKx-Ns-lBN" id="XcH-RS-pkh"/>
