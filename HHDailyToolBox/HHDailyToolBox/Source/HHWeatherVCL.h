@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HHWeatherVCL : UIViewController
+@interface HHWeatherVCL : UIViewController<UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *bgImgView;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherIconImgView;
+@property (weak, nonatomic) IBOutlet UIImageView *weatherContextImgView;
 
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windLabel;
 @property (weak, nonatomic) IBOutlet UILabel *curInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *curTemLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (weak, nonatomic) IBOutlet UITextField *cityTextField;
 
 @end
 

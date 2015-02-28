@@ -8,31 +8,56 @@
 
 #import "HHWeatherVCL.h"
 #import "HHAFNetwork/AFHTTPRequestOperation.h"
-#import "HHWeatherVo.h"
-
 #import "HHAFNetwork/AFImageRequestOperation.h"
-
 #import "HHAFNetwork/UIImageView+AFNetworking.h"
-
-
+#import "HHWeatherSevice.h"
+#import "HHWeatherVo.h"
 
 @interface HHWeatherVCL ()
 
 @property (nonatomic,strong) NSDictionary *weather;
 
+@property (nonatomic,strong)HHWeatherSevice *weatherService;
+
 @end
 
 @implementation HHWeatherVCL
-static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free/v2/";
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.weatherService = [[HHWeatherSevice alloc] init];
     
-    [self jsonTapAction:nil];
-    self.weatherIconImgView.layer.cornerRadius = 4.0;
-    self.weatherIconImgView.layer.borderWidth = 2.0;
+    self.weatherIconImgView.layer.cornerRadius = 15.0;
+    self.weatherIconImgView.layer.borderWidth = 10.0;
     self.weatherIconImgView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.cityTextField.delegate = self;
+    
+    [self weatherViewHidden:YES];
+    [self loadBackgroundImage];
+}
+
+- (void)loadBackgroundImage{
+    [self.indicator startAnimating];
+    NSURL *url = [NSURL URLWithString:@"http://www.raywenderlich.com/wp-content/uploads/2014/01/sunny-background.png"];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    //方法1
+    //    self.weatherIconImgView.imageResponseSerializer = [AFImageResponseSerializer serializer];
+    //    [self.weatherIconImgView setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    //        self.weatherIconImgView.image = image;
+    //        NSLog(@"get weatherIcon");
+    //    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+    //        NSLog(@"fail weatherIcon");
+    //    }];
+    
+    //方法2
+           [[AFImageRequestOperation imageRequestOperationWithRequest:urlRequest
+                                                          success:^(UIImage *image){
+                                                              NSLog(@"get weatherIcon");
+                                                              self.bgImgView.image = image;
+                                                              [self.indicator stopAnimating];
+                                                              [self weatherViewHidden:NO];
+                                                          }] start];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,19 +66,24 @@ static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free
 }
 
 - (IBAction)jsonTapAction:(id)sender{
-    NSString *string = [NSString stringWithFormat:@"%@weather.ashx?key=5a757e32d11224a63d9bb655b2fa5&q=Beijing&date=today&format=json",BaseURLString];
-    NSURL *url = [NSURL URLWithString:string];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    if (self.cityTextField.text.length==0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error city name"
+                                                            message:@"Please check and try again"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [self.indicator startAnimating];
     
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    __weak HHWeatherVCL *instance = self;
+    [self.weatherService requestCityWeather:@{@"city":self.cityTextField.text} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.weather = (NSDictionary *)responseObject;
-       // self.title = @"JSON Retrieved";
         NSLog(@"get weather == %@",self.weather);
-        [self showWeatherInfomation];
-    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [instance reloadWeatherView];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Weather"
                                                             message:[error localizedDescription]
@@ -62,32 +92,36 @@ static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free
                                                   otherButtonTitles:nil];
         [alertView show];
     }];
-    
-    [operation start];
 }
 
-- (void)showWeatherInfomation
+- (void)weatherViewHidden:(BOOL)hidden{
+    self.weatherIconImgView.hidden = hidden;
+    self.weatherContextImgView.hidden = hidden;
+    self.curTemLabel.hidden = hidden;
+    self.curInfoLabel.hidden = hidden;
+    self.tempLabel.hidden = hidden;
+    self.windLabel.hidden = hidden;
+    if (hidden) {
+        [self.indicator startAnimating];
+    }else{
+        [self.indicator stopAnimating];
+    }
+}
+
+- (void)reloadWeatherView
 {
     if(!self.weather)
         return ;
     
     HHWeatherVo *weatherVo = [[HHWeatherVo alloc] initWithAttributes:[self.weather objectForKey:@"data"]];
-    
     NSLog(@"get weather == %@",weatherVo.weatherIconUrl);
     self.curTemLabel.text = [NSString stringWithFormat:@"%@°",weatherVo.tempCCur];
     self.curInfoLabel.text = [NSString stringWithFormat:@"湿度 %%%@,能见度%@",weatherVo.humidity,weatherVo.visibility];
     self.tempLabel.text = [NSString stringWithFormat:@"最低  %@°C,最高 %@°C",weatherVo.tempMinC,weatherVo.tempMaxC];
     self.windLabel.text = [NSString stringWithFormat:@"风力%@级,风速%@m/s",weatherVo.winddirDegree,weatherVo.windspeedMiles];
     
-    self.weatherIconImgView.hidden = NO;
-    self.curTemLabel.hidden = NO;
-    self.curInfoLabel.hidden = NO;
-    self.tempLabel.hidden = NO;
-    self.windLabel.hidden = NO;
-    
-    [self.indicator stopAnimating];
+    [self weatherViewHidden:NO];
     [self requestImage:weatherVo.weatherIconUrl];
-    
 }
 
 - (void)requestImage:(NSString *)string{
@@ -111,9 +145,12 @@ static NSString * const BaseURLString = @"http://api.worldweatheronline.com/free
 //                                                          self.weatherIconImgView.image = image;
 //                                                      }] start];
     //方法3
-    [self.weatherIconImgView setImageWithURL:url];
-    
-    
+    [self.weatherContextImgView setImageWithURL:url];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;{
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end

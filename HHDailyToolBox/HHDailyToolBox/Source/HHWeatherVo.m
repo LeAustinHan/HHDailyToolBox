@@ -22,9 +22,10 @@
     self.tempMaxC       = [weatherDic valueForKeyPath:@"maxtempC"];
     
     self.visibility     = [currentDic valueForKeyPath:@"visibility"];
-    self.humidity      = [currentDic valueForKeyPath:@"humidity"];
-    self.tempCCur      = [currentDic valueForKeyPath:@"temp_C"];
-    self.winddirDegree  = [currentDic valueForKeyPath:@"winddirDegree"];
+    self.humidity       = [currentDic valueForKeyPath:@"humidity"];
+    self.tempCCur       = [currentDic valueForKeyPath:@"temp_C"];
+    float windDegree    = [[currentDic valueForKeyPath:@"winddirDegree"] integerValue]/100;
+    self.winddirDegree  = [NSString stringWithFormat:@"%.2f",windDegree];
     self.windspeedMiles = [currentDic valueForKeyPath:@"windspeedMiles"];
     self.weatherDesc    = [[currentDic valueForKeyPath:@"weatherDesc"] valueForKeyPath:@"value"];
     self.weatherIconUrl = [[[currentDic valueForKeyPath:@"weatherIconUrl"] firstObject] valueForKeyPath:@"value"];
