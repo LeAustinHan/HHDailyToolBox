@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4D7A99EF-C52F-487B-922D-4E9055AEDB8D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HHDailyToolBox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0F01A0094E6D605F5CE1CF28E72E2D0CFA142BDA</key>
+		<string>https://github.com/LeAustinHan/HHDailyToolBox.git</string>
+		<key>115EEA719FE00A02AC5FA66094F28215B901512A</key>
+		<string>https://github.com/LeAustinHan/HHUI.git</string>
+		<key>66ED309017560000236AEA79D865E48C4637E385</key>
+		<string>https://github.com/LeAustinHan/HHAFNetwork.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HHDailyToolBox/HHDailyToolBox.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0F01A0094E6D605F5CE1CF28E72E2D0CFA142BDA</key>
+		<string>../../..</string>
+		<key>115EEA719FE00A02AC5FA66094F28215B901512A</key>
+		<string>../../../../HHUI</string>
+		<key>66ED309017560000236AEA79D865E48C4637E385</key>
+		<string>../../../../HHAFNetwork</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/LeAustinHan/HHDailyToolBox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0F01A0094E6D605F5CE1CF28E72E2D0CFA142BDA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>66ED309017560000236AEA79D865E48C4637E385</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HHAFNetwork</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0F01A0094E6D605F5CE1CF28E72E2D0CFA142BDA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HHDailyToolBox</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>115EEA719FE00A02AC5FA66094F28215B901512A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HHUI</string>
+		</dict>
+	</array>
+</dict>
+</plist>

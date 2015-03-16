@@ -10,8 +10,6 @@
 #import "HHUI/HHTestObject.h"
 #import "HHAFNetwork/AFJSONRequestOperation.h"
 
-#import "AFAppDotNetAPIClient.h"
-
 @interface FirstViewController ()
 
 @end
@@ -22,40 +20,53 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib
     
-    return;
-    HHTestObject *testObjc = [[HHTestObject alloc] init];
-    [testObjc libraryPrintDictionary:@{@"🐑":@"年",@"大":@"吉"}];
+    [self hostAppSaveData];
     
-    NSURLSessionTask *task = [self globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
-        if (!error) {
+    [self performSelector:@selector(scaleView) withObject:nil afterDelay:5.0];
+    
+}
 
-        }
-    }];
+- (void)hostAppSaveData{
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.DailyToolBox"];
+    
+    [userDefaults setObject:@"有霾" forKey:@"com.weather.describe"];
+    [userDefaults setInteger:12 forKey:@"com.weather.degree"];
+    
+    
+    [userDefaults synchronize];
+}
+
+- (void)scaleView{
+    
+    CGSize size = CGSizeMake(2, 2);
+    
+    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - size.width)/2, (self.view.frame.size.height - size.height)/2, 2, 2)];
+    
+    [self.view addSubview:testView];
+    
+    CGRect rect = testView.frame;
+    
+    testView.backgroundColor = [UIColor redColor];
+
+    [UIView beginAnimations:nil context:nil];
+    
+    [UIView setAnimationDuration:2];
+    //在出动画的时候减缓速度
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    //添加动画开始及结束的代理
+    [UIView setAnimationDelegate:self];
+    
+    rect = CGRectMake(rect.origin.x - 100 , rect.origin.y - 100,200, 200);
+    testView.frame = rect;
+    
+    //动画效果
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+    [UIView commitAnimations];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (NSURLSessionDataTask *)globalTimelinePostsWithBlock:(void (^)(NSArray *posts, NSError *error))block {
-    return [[AFAppDotNetAPIClient sharedClient] GET:@"stream/0/posts/stream/global" parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
-        NSArray *postsFromResponse = [JSON valueForKeyPath:@"data"];
-        NSLog(@"json data == %@",postsFromResponse);
-        NSMutableArray *mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
-        for (NSDictionary *attributes in postsFromResponse) {
-//            Post *post = [[Post alloc] initWithAttributes:attributes];
-//            [mutablePosts addObject:post];
-        }
-        
-        if (block) {
-            block([NSArray arrayWithArray:mutablePosts], nil);
-        }
-    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-        if (block) {
-            block([NSArray array], error);
-        }
-    }];
 }
 
 - (void)jsonTest{
@@ -65,6 +76,11 @@
         NSLog(@"App.net Global Stream: %@", JSON);
     } failure:nil];
     [operation start];
+}
+
+- (IBAction)pushNextVCL:(id)sender{
+    UIViewController *testVCL = [[UIViewController alloc] init];
+    
 }
 
 

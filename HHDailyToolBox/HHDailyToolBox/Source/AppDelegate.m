@@ -42,4 +42,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+//响应scheme
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    NSLog(@"Calling Application Bundle ID: %@", sourceApplication);//可以根据此项防止外部引用
+    NSLog(@"URL scheme:%@", [url scheme]);
+    NSLog(@"URL query: %@", [url query]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"schemeTest" object:[url query]];
+    
+    return YES;
+}
+
+
 @end

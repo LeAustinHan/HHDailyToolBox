@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>HHDailyToolBox.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>dailyToolWidget.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8814D6011A663EA200D6BE26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8814D61D1A663EA200D6BE26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>887D29581AA99E6400E977A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88BA9BAE1AA6F08400E72B25</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

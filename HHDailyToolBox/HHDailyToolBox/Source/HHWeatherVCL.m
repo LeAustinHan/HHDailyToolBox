@@ -12,6 +12,7 @@
 #import "HHAFNetwork/UIImageView+AFNetworking.h"
 #import "HHWeatherSevice.h"
 #import "HHWeatherVo.h"
+#import "HHSchemeVCL.h"
 
 
 @interface HHWeatherVCL ()
@@ -42,8 +43,83 @@
     
     [self weatherViewHidden:YES];
     [self loadBackgroundImage];
+    
+    UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 200, 60)];
+    testLabel.textAlignment = NSTextAlignmentCenter;
+    testLabel.textColor = [UIColor whiteColor];
+    
+    NSString *text = @"韩小虎的天气预报";
+    
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:text];
+    
+    [attributeString setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],   NSFontAttributeName : [UIFont systemFontOfSize:17]} range:NSMakeRange(2, 1)];
+    
+    [attributeString setAttributes:@{NSForegroundColorAttributeName : [UIColor greenColor],   NSFontAttributeName : [UIFont systemFontOfSize:17]} range:NSMakeRange(0, 1)];
+    
+    [attributeString setAttributes:@{NSForegroundColorAttributeName : [UIColor orangeColor],   NSFontAttributeName : [UIFont systemFontOfSize:17]} range:NSMakeRange(4, 1)];
+    
+    testLabel.attributedText = attributeString;
+    
+    [self.view addSubview:testLabel];
+    
+    [self.view setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]];
+    
+//    self.view.alpha = 0.5;
+    
+    /* 按钮响应区域
+    UIImage *btnImg = [UIImage imageNamed:@"face.jpg"];
+    UIButton *testRectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [testRectBtn setImage:btnImg forState:UIControlStateNormal];
+//    [testRectBtn setImage:btnImg forState:UIControlStateHighlighted];
+    
+    [testRectBtn setImageEdgeInsets:UIEdgeInsetsMake(15, 15, 15, 15)];
+    
+    testRectBtn.frame = CGRectMake(100, 195, 140, 140);
+    [self.view addSubview:testRectBtn];
+    
+    testRectBtn.backgroundColor = [UIColor blueColor];
+     */
+    
+//    
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 300, 400)];
+//    [imageView setImage:[UIImage imageNamed:@"Default.png"]];
+//    [self.view addSubview:imageView];
+    
+    /*毛玻璃
+    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+    maskView.backgroundColor = [UIColor blackColor];
+    maskView.alpha = 0.7;
+    [self.view addSubview:maskView];
+    
+    // blur效果
+    UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    visualEfView.frame = CGRectMake(0, 0, 320, 568);
+    visualEfView.alpha = 1.0;
+    //visualEfView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:visualEfView];
+     */
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSchemeOpen:) name:@"schemeTest" object:nil];
 }
 
+- (void)receiveSchemeOpen:(id)notify{
+    NSNotification *notification = (NSNotification *)notify;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+
+    HHSchemeVCL *schemeVCL = [storyboard instantiateViewControllerWithIdentifier:@"HHSchemeVCL"];
+    schemeVCL.dissmissBlock = ^{
+        
+    };
+    
+    schemeVCL.title = [NSString stringWithFormat: @"scheme transfer data %@", notification.object];
+    
+    NSLog(@"get scheme data = %@",schemeVCL.title);
+    [self presentViewController:schemeVCL animated:YES completion:^{
+        
+    }];
+    
+}
 - (void)loadBackgroundImage{
     [self.indicator startAnimating];
     NSURL *url = [NSURL URLWithString:@"http://www.raywenderlich.com/wp-content/uploads/2014/01/sunny-background.png"];
@@ -63,6 +139,8 @@
                                                           success:^(UIImage *image){
                                                               NSLog(@"get weatherIcon");
                                                               self.bgImgView.image = image;
+                                                    
+                                                              
                                                               [self.indicator stopAnimating];
                                                               [self weatherViewHidden:NO];
                                                           }] start];
